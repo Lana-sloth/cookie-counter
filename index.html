@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>cookie counter</title>
+    <style type="text/css">
+        .container {
+            width: 600px;
+            margin: 20px auto;
+            border: 1px dashed blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <label>Стоит:</label>
+        <input id="price" type="number" />
+        <select id="price_index" name="index">
+            <option value="digits"></option>
+            <option value="thouthands">тыс.</option>
+            <option value="millions">млн.</option>
+            <option value="billions">млр.</option>
+            <option value="trillions">трл.</option>
+        </select>
+        <label>Доход в секунду:</label>
+        <input id="income" type="number" />
+        <select id="income_index" name="index">
+            <option value="digits"></option>
+            <option value="thouthands">тыс.</option>
+            <option value="millions">млн.</option>
+            <option value="billions">млр.</option>
+            <option value="trillions">трл.</option>
+        </select>
+        <button id="submit-button">Посчитать</button>
+        <div id="result-output"></div>
+    </div>
+</body>
+
+<script>
+    var price, income, result, resultOutput, priceIndex, incomeIndex, submitButton;
+
+    resultOutput = document.getElementById("result-output");
+    priceIndex = document.getElementById("price_index");
+    incomeIndex = document.getElementById("income_index");
+    submitButton = document.getElementById('submit-button');
+
+
+
+    // window.onload = function() {
+    //     result = "";
+    //     document.getElementById("result").innerHTML = result;
+    // }
+
+    function countResult() {
+        price = document.getElementById("price").value;
+        income = document.getElementById("income").value;
+        if (price && income) {
+            price = multiplier(price, priceIndex);
+            income = multiplier(income, incomeIndex);
+            result = price / income / 120 / 60;
+            resultOutput.innerHTML = result;
+        }
+    }
+
+    function multiplier(a, b) {
+        switch (b.value) {
+            case "digits":
+                return a * 1;
+                break;
+            case "thouthands":
+                return a * 1000;
+                break;
+            case "millions":
+                return a * 1000000;
+                break;
+            case "billions":
+                return a * 1000000000;
+                break;
+            case "trillions":
+                return a * 1000000000000;
+        }
+    }
+    submitButton.addEventListener('click', function() {
+        countResult();
+    });
+</script>
+
+</html>
