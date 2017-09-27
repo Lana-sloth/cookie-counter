@@ -15,50 +15,74 @@
 <body>
     <div class="container">
         <label>Стоит:</label>
-        <input id="price" type="number" />
-        <select id="price_index" name="index">
-            <option value="digits"></option>
+        <input id="custom_price" type="number" />
+        <select id="custom_price_index" name="index">
+            <option value="digits">–</option>
             <option value="thouthands">тыс.</option>
             <option value="millions">млн.</option>
             <option value="billions">млр.</option>
             <option value="trillions">трл.</option>
         </select>
         <label>Доход в секунду:</label>
-        <input id="income" type="number" />
-        <select id="income_index" name="index">
-            <option value="digits"></option>
+        <input id="custom_income" type="number" />
+        <select id="custom_income_index" name="index">
+            <option value="digits">–</option>
             <option value="thouthands">тыс.</option>
             <option value="millions">млн.</option>
             <option value="billions">млр.</option>
             <option value="trillions">трл.</option>
         </select>
         <button id="submit-button">Посчитать</button>
-        <div id="result-output"></div>
+        <div id="custom_result-output"></div>
+    </div>
+    <div class="container">
+        <ul>
+            <li>
+                <h1>Cursor</h1>
+                <label>Стоит:</label>
+                <input id="cursor_price" type="number" />
+                <select id="cursor_price_index" name="index">
+                    <option value="digits">–</option>
+                    <option value="thouthands">тыс.</option>
+                    <option value="millions">млн.</option>
+                    <option value="billions">млр.</option>
+                    <option value="trillions">трл.</option>
+                </select>
+                <label>Доход в секунду:</label>
+                <input id="cursor_income" type="number" />
+                <select id="cursor_income_index" name="index">
+                    <option value="digits">–</option>
+                    <option value="thouthands">тыс.</option>
+                    <option value="millions">млн.</option>
+                    <option value="billions">млр.</option>
+                    <option value="trillions">трл.</option>
+                </select>
+                <div id="cursor_result-output"></div>
+            </li>
+        </ul>
     </div>
 </body>
 
 <script>
     var price, income, result, resultOutput, priceIndex, incomeIndex, submitButton;
 
-    resultOutput = document.getElementById("result-output");
-    priceIndex = document.getElementById("price_index");
-    incomeIndex = document.getElementById("income_index");
     submitButton = document.getElementById('submit-button');
-
-
 
     // window.onload = function() {
     //     result = "";
     //     document.getElementById("result").innerHTML = result;
     // }
 
-    function countResult() {
-        price = document.getElementById("price").value;
-        income = document.getElementById("income").value;
+    function countResult(elementId) {
+        price = document.getElementById(elementId + "_price").value;
+        income = document.getElementById(elementId + "_income").value;
+        priceIndex = document.getElementById(elementId + "_price_index");
+        incomeIndex = document.getElementById(elementId + "_income_index");
+        resultOutput = document.getElementById(elementId + "_result-output");
         if (price && income) {
             price = multiplier(price, priceIndex);
             income = multiplier(income, incomeIndex);
-            result = price / income / 120 / 60;
+            result = price / income / 60 / 60;
             resultOutput.innerHTML = result;
         }
     }
@@ -82,8 +106,25 @@
         }
     }
     submitButton.addEventListener('click', function() {
-        countResult();
+        countResult("custom");
+        // countResult("cursor_");
+        init("cursor");
     });
+    var buildingList = {
+        cursor: {
+            price: 19000000000,
+            income: 13000000
+        }
+    }
+
+    function init(building) {
+        price = document.getElementById(building + "_price");
+        income = document.getElementById(building + "_income");
+        price.value = buildingList[building]["price"];
+        console.log(buildingList[building]["price"]);
+        // priceIndex = document.getElementById(building + "price_index");
+        // incomeIndex = document.getElementById(building + "income_index");
+    }
 </script>
 
 </html>
